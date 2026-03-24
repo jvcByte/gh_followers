@@ -7,8 +7,8 @@ on:
   workflow_dispatch: # Allows manual triggering
 
 env:
-  GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_USERNAME: ${{ secrets.USERNAME }}
+  GITHUB_TOKEN: ${{ secrets.TOKEN }}
   WORKER_COUNT: ${{ secrets.WORKER_COUNT || 1 }}
   QUEUE_SIZE: ${{ secrets.QUEUE_SIZE || 3 }}
   TIME_DELAY_MS: ${{ secrets.TIME_DELAY_MS || 2000 }}
