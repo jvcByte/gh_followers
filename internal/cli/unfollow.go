@@ -15,6 +15,7 @@ import (
 func NewUnFollowCommand() *cobra.Command {
 	cmd := unFollowCommand()
 	cmd.Flags().BoolP("force", "f", false, "Force unfollow")
+	cmd.Flags().StringSlice("users", []string{}, "Specific users to unfollow if they don't follow back")
 
 	return cmd
 }
@@ -28,6 +29,7 @@ func unFollowCommand() *cobra.Command {
 			var (
 				err                              error
 				force                            bool
+				targetUsers                      []string
 				cfg                              *config.Config
 				followers, toUnfollow, following []string
 			)
@@ -39,14 +41,24 @@ func unFollowCommand() *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("failed to get force flag: %w", err)
 			}
+			targetUsers, err = cmd.Flags().GetStringSlice("users")
+			if err != nil {
+				return fmt.Errorf("failed to get users flag: %w", err)
+			}
 			gm := git_hub_manager.NewGitHubManager(cfg.GitHubToken, cfg.GitHubUsername)
 			followers, err = gm.GetFollowers(nil)
 			if err != nil {
 				return err
 			}
-			following, err = gm.GetFollowing()
-			if err != nil {
-				return err
+
+			if len(targetUsers) > 0 {
+				// Only consider the specified users, unfollow those not in followers
+				following = targetUsers
+			} else {
+				following, err = gm.GetFollowing()
+				if err != nil {
+					return err
+				}
 			}
 
 			toUnfollow = gm.DiffUsernames(followers, following)

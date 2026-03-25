@@ -15,6 +15,7 @@ import (
 func NewFollowCommand() *cobra.Command {
 	cmd := followCommand()
 	cmd.Flags().BoolP("force", "f", false, "Force follow")
+	cmd.Flags().IntP("limit", "l", 0, "Max number of users to follow (0 = no limit)")
 
 	return cmd
 }
@@ -29,6 +30,7 @@ func followCommand() *cobra.Command {
 			var (
 				err                            error
 				force                          bool
+				limit                          int
 				cfg                            *config.Config
 				username                       string
 				followers, toFollow, following []string
@@ -42,6 +44,10 @@ func followCommand() *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("failed to get force flag: %w", err)
 			}
+			limit, err = cmd.Flags().GetInt("limit")
+			if err != nil {
+				return fmt.Errorf("failed to get limit flag: %w", err)
+			}
 			gm := git_hub_manager.NewGitHubManager(cfg.GitHubToken, cfg.GitHubUsername)
 			followers, err = gm.GetFollowers(&username)
 			if err != nil {
@@ -53,6 +59,10 @@ func followCommand() *cobra.Command {
 			}
 			following = append(following, cfg.GitHubUsername)
 			toFollow = gm.DiffUsernames(following, followers)
+
+			if limit > 0 && len(toFollow) > limit {
+				toFollow = toFollow[:limit]
+			}
 
 			if len(toFollow) == 0 {
 				fmt.Println("No users to follow")

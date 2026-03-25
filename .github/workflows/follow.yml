@@ -1,0 +1,83 @@
+name: Daily Follow
+
+on:
+  schedule:
+    - cron: "0 8 * * *" # every day at 8 AM UTC
+  workflow_dispatch:
+
+env:
+  GITHUB_USERNAME: ${{ secrets.USERNAME }}
+  GITHUB_TOKEN: ${{ secrets.TOKEN }}
+  WORKER_COUNT: 1
+  QUEUE_SIZE: 5
+  TIME_DELAY_MS: 2000
+
+jobs:
+  follow:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.25"
+
+      - run: go build -o github-followers ./cmd
+
+      - name: Follow 1 user per account (30 total/day)
+        run: |
+          TOP_ACCOUNTS=(
+            "torvalds" "gaearon" "sindresorhus" "yyx990803" "tj"
+            "addyosmani" "paulirish" "getify" "kentcdodds" "mxstbr"
+            "nicowillis" "jeresig" "dhh" "defunkt" "mojombo"
+            "pjhyett" "wycats" "ezmobius" "jnewland" "technoweenie"
+            "josevalim" "lifo" "rails" "tenderlove" "brynary"
+            "schacon" "bmizerany" "rtomayko" "adamwiggins" "kneath"
+          )
+
+          # Capture output to parse followed usernames
+          > /tmp/follow-output.txt
+          for account in "${TOP_ACCOUNTS[@]}"; do
+            echo "→ Following 1 user from $account..."
+            ./github-followers follow "$account" --force --limit 1 | tee -a /tmp/follow-output.txt
+          done
+
+      - name: Update follow log
+        run: |
+          [ ! -f follow-log.json ] && echo "[]" > follow-log.json
+
+          python3 - <<'EOF'
+          import json, re
+          from datetime import datetime, timezone
+
+          today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+          # Parse "Followed <username>" lines from tool output
+          with open("/tmp/follow-output.txt") as f:
+              output = f.read()
+
+          followed = re.findall(r"^Followed (.+)$", output, re.MULTILINE)
+
+          with open("follow-log.json") as f:
+              log = json.load(f)
+
+          if followed:
+              log.append({"date": today, "users": followed})
+              with open("follow-log.json", "w") as f:
+                  json.dump(log, f, indent=2)
+              print(f"Logged {len(followed)} users for {today}: {followed}")
+          else:
+              print("No new users followed today")
+          EOF
+
+      - name: Commit follow log
+        permissions:
+          contents: write
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add follow-log.json
+          git diff --cached --quiet || git commit -m "chore: follow log $(date -u +%Y-%m-%d)"
+          git push
