@@ -74,7 +74,7 @@ func followCommand() *cobra.Command {
 			}
 
 			if force == false {
-				fmt.Printf("\nYou are sure that you want to follow %d users? (y/n):", len(toFollow))
+				fmt.Printf("\nFollow %d users? (y/n): ", len(toFollow))
 				confirm := helper.GetInput("")
 				if strings.ToLower(confirm) != "y" && strings.ToLower(confirm) != "yes" {
 					fmt.Println("Operation canceled")
