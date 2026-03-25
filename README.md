@@ -135,12 +135,13 @@ Automatically follows 1 user from each of 30 top developer accounts daily (30 us
 - **Trigger**: Manual via workflow_dispatch
 - **Log**: Maintains `follow-log.json` with daily activity
 
-### Weekly Unfollow Workflow
+### Daily Unfollow Workflow
 
-Automatically unfollows users who don't follow you back:
+Automatically unfollows users who don't follow you back (with 3-day grace period):
 
-- **Schedule**: Weekly on Sundays at 8 AM UTC
-- **Trigger**: Manual via workflow_dispatch
+- **Schedule**: Daily at 9 AM UTC (1 hour after follow workflow)
+- **Logic**: Only unfollows users followed 3+ days ago who haven't followed back
+- **Trigger**: Manual via workflow_dispatch (with optional dry-run mode)
 
 ### Setup for Automated Workflows
 
