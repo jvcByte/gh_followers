@@ -3,9 +3,9 @@
 A powerful Go-based command-line tool to manage your GitHub following relationships. Follow users who follow a specific user but don't follow you, or unfollow users who don't follow you back.
 
 [![Go Version](https://img.shields.io/badge/go-1.24+-blue?logo=go)](https://golang.org/)
-[![Go Reference](https://pkg.go.dev/badge/github.com/jvcByte/gh_follow_unfollow.svg)](https://pkg.go.dev/github.com/jvcByte/gh_follow_unfollow)
-[![Release](https://img.shields.io/github/v/release/jvcByte/gh_follow_unfollow)](https://github.com/jvcByte/gh_follow_unfollow/releases)
-[![Go Report Card](https://goreportcard.com/badge/github.com/jvcByte/gh_follow_unfollow)](https://goreportcard.com/report/github.com/jvcByte/gh_follow_unfollow)
+[![Go Reference](https://pkg.go.dev/badge/github.com/jvcByte/gh_followers.svg)](https://pkg.go.dev/github.com/jvcByte/gh_followers)
+[![Release](https://img.shields.io/github/v/release/jvcByte/gh_followers)](https://github.com/jvcByte/gh_followers/releases)
+[![Go Report Card](https://goreportcard.com/badge/github.com/jvcByte/gh_followers)](https://goreportcard.com/report/github.com/jvcByte/gh_followers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ Features
@@ -40,8 +40,8 @@ A powerful Go-based command-line tool to manage your GitHub following relationsh
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/jvcByte/gh_follow_unfollow.git
-   cd gh_follow_unfollow
+   git clone https://github.com/jvcByte/gh_followers.git
+   cd gh_followers
    ```
 
 2. Install dependencies:
@@ -56,7 +56,7 @@ A powerful Go-based command-line tool to manage your GitHub following relationsh
 
 ### Option 2: Install via Go
 ```bash
-go install github.com/jvcByte/gh_follow_unfollow@latest
+go install github.com/jvcByte/gh_followers@latest
 ```
 
 ## ⚙️ Configuration
@@ -117,7 +117,7 @@ Unfollow users who don't follow you back:
 ## 🏗️ Project Structure
 
 ```
-gh_follow_unfollow/
+gh_followers/
 ├── cmd/                 # Main application entry point
 ├── internal/
 │   ├── cli/            # Command-line interface implementation
@@ -152,11 +152,11 @@ Unfollow users who don't follow you back:
 
 ```bash
 # Basic usage - unfollow users who don't follow you back
-./gh_follow_unfollow unfollow
+./gh_followers unfollow
 
 # Skip confirmation prompt
-./gh_follow_unfollow unfollow --force
-./gh_follow_unfollow unfollow -f
+./gh_followers unfollow --force
+./gh_followers unfollow -f
 ```
 
 **Example workflow:**
@@ -177,11 +177,11 @@ Both commands support the following flags:
 
 ```bash
 # Show general help
-./gh_follow_unfollow --help
+./gh_followers --help
 
 # Show help for specific commands
-./gh_follow_unfollow follow --help
-./gh_follow_unfollow unfollow --help
+./gh_followers follow --help
+./gh_followers unfollow --help
 ```
 
 ## Configuration Options
@@ -228,7 +228,7 @@ export GITHUB_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxx"
 export WORKER_COUNT=2
 export TIME_DELAY_MS=1500
 
-./gh_follow_unfollow unfollow
+./gh_followers unfollow
 ```
 
 ## Architecture

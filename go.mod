@@ -1,4 +1,4 @@
-module github.com/jvcByte/gh_follow_unfollow
+module github.com/jvcByte/gh_followers
 
 go 1.25.0
 

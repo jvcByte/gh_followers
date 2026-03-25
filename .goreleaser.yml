@@ -7,7 +7,7 @@ before:
 
 builds:
   - main: ./cmd/main.go
-    binary: 'gh_follow_unfollow'
+    binary: 'gh_followers'
     env:
       - CGO_ENABLED=0
       - GOGC=150
@@ -57,6 +57,6 @@ changelog:
 release:
   github:
     owner: 'jvcByte'
-    name: 'gh_follow_unfollow'
+    name: 'gh_followers'
   draft: false
   prerelease: auto

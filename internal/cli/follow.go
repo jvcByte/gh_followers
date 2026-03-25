@@ -5,10 +5,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/jvcByte/gh_follow_unfollow/internal/config"
-	"github.com/jvcByte/gh_follow_unfollow/internal/git_hub_manager"
-	"github.com/jvcByte/gh_follow_unfollow/internal/helper"
-	"github.com/jvcByte/gh_follow_unfollow/internal/worker"
+	"github.com/jvcByte/gh_followers/internal/config"
+	"github.com/jvcByte/gh_followers/internal/git_hub_manager"
+	"github.com/jvcByte/gh_followers/internal/helper"
+	"github.com/jvcByte/gh_followers/internal/worker"
 	"github.com/spf13/cobra"
 )
 
