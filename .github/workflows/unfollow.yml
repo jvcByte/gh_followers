@@ -2,8 +2,8 @@ name: Unfollow Non-Followers (1-day delay)
 
 on:
   schedule:
-    - cron: "0 9 * * *" # daily at 9 AM UTC
-    - cron: "0 21 * * *" # daily at 9 PM UTC
+    - cron: "0 9 * * *" # daily at 10 AM WAT (9 AM UTC) - 1hr after follow
+    - cron: "0 17 * * *" # daily at 6 PM WAT (5 PM UTC) - 1hr after follow
   workflow_dispatch:
     inputs:
       dry_run:
@@ -110,5 +110,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add follow-log.json
-          git diff --cached --quiet || git commit -m "chore: unfollow log $(date -u +%Y-%m-%d)"
+          git diff --cached --quiet || git commit -m "chore: unfollowed non-followers $(TZ='Africa/Lagos' date '+%Y-%m-%d %H:%M:%S WAT')"
           git push

@@ -2,8 +2,8 @@ name: Daily Follow
 
 on:
   schedule:
-    - cron: "0 8 * * *" # daily at 8 AM UTC
-    - cron: "0 20 * * *" # daily at 8 PM UTC
+    - cron: "0 8 * * *" # daily at 9 AM WAT (8 AM UTC) - catches Europe morning
+    - cron: "0 16 * * *" # daily at 5 PM WAT (4 PM UTC) - catches US morning
   workflow_dispatch:
 
 env:
@@ -79,5 +79,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add follow-log.json
-          git diff --cached --quiet || git commit -m "chore: follow log $(date -u +%Y-%m-%d)"
+          git diff --cached --quiet || git commit -m "chore: followed new users $(TZ='Africa/Lagos' date '+%Y-%m-%d %H:%M:%S WAT')"
           git push
