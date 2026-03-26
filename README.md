@@ -1,6 +1,6 @@
 # GitHub Followers Manager
 
-A powerful Go-based CLI tool to manage your GitHub following relationships. Follow users from specific accounts or unfollow users who don't follow you back.
+A powerful Go-based CLI tool to manage your GitHub following relationships. Follow followers of specific users who don't already follow you, or unfollow users who don't follow you back.
 
 [![Go Version](https://img.shields.io/badge/go-1.24+-blue?logo=go)](https://golang.org/)
 [![Go Reference](https://pkg.go.dev/badge/github.com/jvcByte/gh_followers.svg)](https://pkg.go.dev/github.com/jvcByte/gh_followers)
