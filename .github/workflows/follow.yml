@@ -76,8 +76,8 @@ jobs:
 
       - name: Commit follow log
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "${{ secrets.GH_USERNAME }}"
+          git config user.email "${{ secrets.GH_EMAIL }}"
           git add follow-log.json
           git diff --cached --quiet || git commit -m "chore: followed new users $(TZ='Africa/Lagos' date '+%Y-%m-%d %H:%M:%S WAT')"
           git push
