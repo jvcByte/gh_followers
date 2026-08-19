@@ -87,13 +87,13 @@ Follow followers of a specific user who don't already follow you:
 
 ```bash
 # Follow up to 5 followers of torvalds
-./github-followers follow torvalds --limit 5
+./gh_followers follow torvalds --limit 5
 
 # Follow without confirmation
-./github-followers follow username --force
+./gh_followers follow username --force
 
 # Follow with custom limit
-./github-followers follow username --limit 10
+./gh_followers follow username --limit 10
 ```
 
 **Flags:**
@@ -106,10 +106,10 @@ Unfollow users who don't follow you back:
 
 ```bash
 # Show users and confirm before unfollowing
-./github-followers unfollow
+./gh_followers unfollow
 
 # Unfollow without confirmation
-./github-followers unfollow --force
+./gh_followers unfollow --force
 ```
 
 **Flags:**
@@ -118,9 +118,9 @@ Unfollow users who don't follow you back:
 ### Help
 
 ```bash
-./github-followers --help
-./github-followers follow --help
-./github-followers unfollow --help
+./gh_followers --help
+./gh_followers follow --help
+./gh_followers unfollow --help
 ```
 
 ## Automated Workflows

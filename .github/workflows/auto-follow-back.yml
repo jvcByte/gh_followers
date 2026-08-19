@@ -25,5 +25,5 @@ jobs:
 
       - run: go build -o gh_followers ./cmd
 
-      - name: Follow back users who follow jvcByte
-        run: ./gh_followers follow jvcByte --force
+      - name: Follow back users who follow ${{secrets.GH_USERNAME}}
+        run: ./gh_followers follow ${{secrets.GH_USERNAME}} --force
